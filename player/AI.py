@@ -249,8 +249,9 @@ class AI:
             arr.append([y,x,move[0],move[1],mk])
         return arr
 
-
-    def calculateb(self,gametiles):
+#Delete whole thing and come up with own evaluation
+    
+    def calculateb(self,gametiles): 
         value=0
         for x in range(8):
             for y in range(8):
