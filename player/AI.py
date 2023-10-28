@@ -250,9 +250,25 @@ class AI:
         return arr
 
 #Delete whole thing and come up with own evaluation
-    
     def calculateb(self,gametiles): 
+
+        #Added for loop to store the kings location
         value=0
+        for x in range(8):
+            for y in range(8):
+                    if gametiles[y][x].pieceonTile.tostring()=='K':
+                        value=value-10000
+                        kingLocationBatman = gametiles[y][x]
+
+                    if gametiles[y][x].pieceonTile.tostring()=='k':
+                        value=value+10000
+                        kingLocationNewbie = gametiles[y][x]
+                        
+        #If the board state results in kings death, that's the move we want to take
+        if value != 0:
+            return value
+
+        #Needs to find a way to determine distance from the kings
         for x in range(8):
             for y in range(8):
                     if gametiles[y][x].pieceonTile.tostring()=='P':
@@ -270,9 +286,6 @@ class AI:
                     if gametiles[y][x].pieceonTile.tostring()=='Q':
                         value=value-1000
 
-                    if gametiles[y][x].pieceonTile.tostring()=='K':
-                        value=value-10000
-
                     if gametiles[y][x].pieceonTile.tostring()=='p':
                         value=value+100
 
@@ -287,9 +300,6 @@ class AI:
 
                     if gametiles[y][x].pieceonTile.tostring()=='q':
                         value=value+1000
-
-                    if gametiles[y][x].pieceonTile.tostring()=='k':
-                        value=value+10000
 
         return value
 
