@@ -268,7 +268,8 @@ class AI:
         if value != 0:
             return value
 
-        #Needs to find a way to determine distance from the kings
+        #Needs to find a way to determine distance from the kings (Store distance with absolute value of x,y?)
+        #based on the distance how much do we want to assign as a value, and do we want to assign more value to be closer to our king for defense of farther for offense)
         for x in range(8):
             for y in range(8):
                     if gametiles[y][x].pieceonTile.tostring()=='P':
