@@ -282,46 +282,46 @@ class AI:
                             value=value-2000
                         #pawn is near king
                         elif distance_from_newbie_king<=3:
-                            value=value-200
+                            value=value-100
                         #paw exisits
                         else:
-                            value=value-100
+                            value=value-200
 
                     if gametiles[y][x].pieceonTile.tostring()=='N':
                         #knight in in the position to kill king
                         if (kingLocationNewbie[0]-y==1 and kingLocationNewbie[1]-x==2) or (kingLocationNewbie[0]-y==2 and kingLocationNewbie[1]-x==1):
                             value=value-2000
                         elif distance_from_newbie_king<=3:
-                            value=value-700
-                        else:
                             value=value-350
+                        else:
+                            value=value-700
 
                     if gametiles[y][x].pieceonTile.tostring()=='B':
                         #bishop is in position to kill king
                         if distance_from_newbie_king==1 and kingLocationNewbie[0]-y!=0 and kingLocationNewbie[1]-x!=0:
                             value=value-2000
                         elif distance_from_newbie_king<=3:
-                            value=value-700
-                        else:
                             value=value-350
+                        else:
+                            value=value-700
 
                     if gametiles[y][x].pieceonTile.tostring()=='R':
                         #rook is in position to kill king
                         if distance_from_newbie_king==1 and (kingLocationNewbie[0]-y==0 or kingLocationNewbie[1]-x==0):
                             value=value-2000
                         elif distance_from_newbie_king<=3:
-                            value=value-1050
+                            value=value-525
                         else:
-                            value=value-525                        
+                            value=value-1050                        
 
                     if gametiles[y][x].pieceonTile.tostring()=='Q':
                         #queen is in position to kill king
                         if distance_from_newbie_king==1:
                             value=value-2000
                         elif distance_from_newbie_king<=3:
-                            value=value-1500
-                        else:
                             value=value-1000
+                        else:
+                            value=value-1500
  
                     if gametiles[y][x].pieceonTile.tostring()=='p':
                         #pawn in in the position to kill king
@@ -329,42 +329,42 @@ class AI:
                             value=value+2000
                         #pawn is near king
                         elif distance_from_batman_king<=3:
-                            value=value+200
+                            value=value+100
                         #paw exisits
                         else:
-                            value=value+100
+                            value=value+200
 
                     if gametiles[y][x].pieceonTile.tostring()=='n':
                         if (kingLocationBatman[0]-y==1 and kingLocationBatman[1]-x==2) or (kingLocationBatman[0]-y==2 and kingLocationBatman[1]-x==1):
                             value=value+2000
                         elif distance_from_batman_king<=3:
-                            value=value+700
-                        else:
                             value=value+350
+                        else:
+                            value=value+700
 
                     if gametiles[y][x].pieceonTile.tostring()=='b':
                         if distance_from_batman_king==1 and kingLocationBatman[0]-y!=0 and kingLocationBatman[1]-x!=0:
                             value=value+2000
                         elif distance_from_batman_king<=3:
-                            value=value+700
-                        else:
                             value=value+350
+                        else:
+                            value=value+700
 
                     if gametiles[y][x].pieceonTile.tostring()=='r':
                         if distance_from_batman_king==1 and (kingLocationBatman[0]-y==0 or kingLocationBatman[1]-x==0):
                             value=value+2000
                         elif distance_from_batman_king<=3:
-                            value=value+1050
+                            value=value+525
                         else:
-                            value=value+525  
+                            value=value+1050  
 
                     if gametiles[y][x].pieceonTile.tostring()=='q':
                         if distance_from_batman_king==1:
                             value=value+2000
                         elif distance_from_batman_king<=3:
-                            value=value+1500
-                        else:
                             value=value+1000
+                        else:
+                            value=value+1500
 
         return value
 
