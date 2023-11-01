@@ -267,8 +267,9 @@ class AI:
         if value != 0:
             return value
 
-        #Needs to find a way to determine distance from the kings (Store distance with absolute value of x,y?)
-        #based on the distance how much do we want to assign as a value, and do we want to assign more value to be closer to our king for defense of farther for offense)
+        #our implementation for getting the value prioritizes getting any piece to a check position,
+        #then our implementation prioritized keeping our pieces alive based on value (similar to the OG implementation)
+        #and lastly our implementation prioritizing getting our pieces closer to the king to hopefully get the check postion
         for x in range(8):
             for y in range(8):
                     #save the distance of piece to opponent king capital letters
