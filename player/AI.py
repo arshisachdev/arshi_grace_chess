@@ -250,26 +250,28 @@ class AI:
         return arr
 
     def calculateb(self,gametiles): 
-
-        #Store the kings location
         value=0
+        #how many pieces are left will come in handy for when we want to prioritize promoting a pawn
+        how_many_pieces_left=0
+        #Store the kings location
         for x in range(8):
             for y in range(8):
                     if gametiles[y][x].pieceonTile.tostring()=='K':
-                        value=value-10000
+                        value=value-100000
                         kingLocationBatman = [y,x]
+                    how_many_pieces_left=how_many_pieces_left+1
 
                     if gametiles[y][x].pieceonTile.tostring()=='k':
-                        value=value+10000
+                        value=value+100000
                         kingLocationNewbie = [y,x]
+                    how_many_pieces_left=how_many_pieces_left+1
                         
         #If the board state results in kings death end of the game
         if value != 0:
             return value
-
-        #our implementation for getting the value prioritizes getting any piece to a check position,
-        #then our implementation prioritized keeping our pieces alive based on value (similar to the OG implementation)
-        #and lastly our implementation prioritizing getting our pieces closer to the king to hopefully get the check postion
+        #our implementation prioritizes surronding the king to make killing the king easier in the begining of the game  
+        #while still killing as many of the oponents pieces as possible without getting killed
+        #when a few pieces are left (combined 16) we introduce prioritizing getting the pawn promoted to gain back some powerful pieces
         for x in range(8):
             for y in range(8):
                     #save the distance of piece to opponent king capital letters
@@ -278,94 +280,70 @@ class AI:
                     distance_from_batman_king=((kingLocationBatman[0]-y)**2+(kingLocationBatman[1]-x)**2)**(1/2)
 
                     if gametiles[y][x].pieceonTile.tostring()=='P':
-                        #pawn in in the position to kill king
-                        if distance_from_newbie_king==1 and kingLocationNewbie[0]-y!=0 and kingLocationNewbie[1]-x!=0:
-                            value=value-500
-                        #pawn is near king
-                        #elif distance_from_newbie_king<=3:
-                        #    value=value-100
-                        #paw exisits
-                        else:
-                            value=value-100
+                        if y==0:
+                            if how_many_pieces_left<=16:
+                                value=value-400
+                            else:
+                                value=value-200
+                        value=value-100
+                        how_many_pieces_left=how_many_pieces_left+1
 
-                    if gametiles[y][x].pieceonTile.tostring()=='N':
-                        #knight in in the position to kill king
-                        if (kingLocationNewbie[0]-y==1 and kingLocationNewbie[1]-x==2) or (kingLocationNewbie[0]-y==2 and kingLocationNewbie[1]-x==1):
-                            value=value-500
-                        #elif distance_from_newbie_king<=3:
-                        #    value=value-350
-                        else:
-                            value=value-350
+                    if gametiles[y][x].pieceonTile.tostring()=='N' and distance_from_newbie_king>1:
+                        if distance_from_newbie_king<=3:
+                            value=value-200
+                        value=value-350
+                        how_many_pieces_left=how_many_pieces_left+1
 
                     if gametiles[y][x].pieceonTile.tostring()=='B':
-                        #bishop is in position to kill king
-                        if distance_from_newbie_king==1 and kingLocationNewbie[0]-y!=0 and kingLocationNewbie[1]-x!=0:
-                            value=value-500
-                        #elif distance_from_newbie_king<=3:
-                        #    value=value-350
-                        else:
-                            value=value-350
+                        if distance_from_newbie_king<=3 and distance_from_newbie_king>1:
+                            value=value-200
+                        value=value-350
+                        how_many_pieces_left=how_many_pieces_left+1
 
                     if gametiles[y][x].pieceonTile.tostring()=='R':
-                        #rook is in position to kill king
-                        if distance_from_newbie_king==1 and (kingLocationNewbie[0]-y==0 or kingLocationNewbie[1]-x==0):
-                            value=value-500
-                        #elif distance_from_newbie_king<=3:
-                        #    value=value-525
-                        else:
-                            value=value-525                        
+                        if distance_from_newbie_king<=3 and distance_from_newbie_king>1:
+                            value=value-200
+                        value=value-525
+                        how_many_pieces_left=how_many_pieces_left+1                        
 
                     if gametiles[y][x].pieceonTile.tostring()=='Q':
-                        #queen is in position to kill king
-                        if distance_from_newbie_king==1:
-                            value=value-500
-                        #elif distance_from_newbie_king<=3:
-                        #    value=value-1000
-                        else:
-                            value=value-1000
+                        if distance_from_newbie_king<=3 and distance_from_newbie_king>1:
+                            value=value-200
+                        value=value-1000
+                        how_many_pieces_left=how_many_pieces_left+1
  
                     if gametiles[y][x].pieceonTile.tostring()=='p':
-                        #pawn in in the position to kill king
-                        if distance_from_batman_king==1 and kingLocationBatman[0]-y!=0 and kingLocationBatman[1]-x!=0:
-                            value=value+500
-                        #pawn is near king
-                        #elif distance_from_batman_king<=3:
-                        #    value=value+100
-                        #paw exisits
-                        else:
-                            value=value+100
+                        if y==8:
+                            if how_many_pieces_left<=16:
+                                value=value-400
+                            else:
+                                value=value-200
+                        value=value+100
+                        how_many_pieces_left=how_many_pieces_left+1
 
                     if gametiles[y][x].pieceonTile.tostring()=='n':
-                        if (kingLocationBatman[0]-y==1 and kingLocationBatman[1]-x==2) or (kingLocationBatman[0]-y==2 and kingLocationBatman[1]-x==1):
-                            value=value+500
-                        #elif distance_from_batman_king<=3:
-                        #    value=value+350
-                        else:
-                            value=value+350
+                        if distance_from_batman_king<=3 and distance_from_newbie_king>1:
+                            value=value+200
+                        value=value+350
+                        how_many_pieces_left=how_many_pieces_left+1
 
                     if gametiles[y][x].pieceonTile.tostring()=='b':
-                        if distance_from_batman_king==1 and kingLocationBatman[0]-y!=0 and kingLocationBatman[1]-x!=0:
-                            value=value+500
-                        #elif distance_from_batman_king<=3:
-                        #    value=value+350
-                        else:
-                            value=value+350
+                        if distance_from_batman_king<=3 and distance_from_newbie_king>1:
+                            value=value+200
+                        value=value+350
+                        how_many_pieces_left=how_many_pieces_left+1
 
                     if gametiles[y][x].pieceonTile.tostring()=='r':
-                        if distance_from_batman_king==1 and (kingLocationBatman[0]-y==0 or kingLocationBatman[1]-x==0):
-                            value=value+500
-                        #elif distance_from_batman_king<=3:
-                        #    value=value+525
-                        else:
-                            value=value+525  
+                        if distance_from_batman_king<=3 and distance_from_newbie_king>1:
+                            value=value+200
+                        value=value+525
+                        how_many_pieces_left=how_many_pieces_left+1  
 
                     if gametiles[y][x].pieceonTile.tostring()=='q':
-                        if distance_from_batman_king==1:
-                            value=value+500
-                        #elif distance_from_batman_king<=3:
-                        #    value=value+1000
-                        else:
-                            value=value+1000
+                        if distance_from_batman_king<=3 and distance_from_newbie_king>1:
+                            value=value+200
+                        value=value+1000
+                        how_many_pieces_left=how_many_pieces_left+1
 
         return value
 
